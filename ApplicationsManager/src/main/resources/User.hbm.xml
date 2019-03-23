@@ -10,14 +10,13 @@
             This class contains the users detail.
         </meta>
 
-        <id name = "id" type = "int" column = "id">
+        <id name = "id" type = "int" column = "user_id">
             <generator class="native"/>
         </id>
 
         <property name = "name" column = "name" type = "string"/>
         <property name = "username" column = "username" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
-
 
     </class>
 </hibernate-mapping>

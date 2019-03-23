@@ -10,7 +10,7 @@
             This class contains the Applications detail.
         </meta>
 
-        <id name = "id" type = "int" column = "id">
+        <id name = "id" type = "int" column = "application_id">
             <generator class="native"/>
         </id>
 

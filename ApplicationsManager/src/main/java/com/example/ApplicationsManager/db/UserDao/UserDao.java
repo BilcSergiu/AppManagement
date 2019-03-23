@@ -11,8 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDao extends UserDaoInterface {
 
@@ -88,7 +88,7 @@ public class UserDao extends UserDaoInterface {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             System.out.println(resultSet.toString());
-            return createObjects(resultSet).get(0);
+            return createObjects(resultSet).iterator().next();
 
         } catch (SQLException e) {
             System.out.println("ApplicationDAO:findById " + e.getMessage());
@@ -121,7 +121,7 @@ public class UserDao extends UserDaoInterface {
         return t;
     }
 
-    public List<User> findAll() {
+    public Set<User> findAll() {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -183,15 +183,14 @@ public class UserDao extends UserDaoInterface {
 
     }
 
-    @Override
-    public List<User> createObjects(ResultSet rs) {
+    public Set<User> createObjects(ResultSet rs) {
 
-        List<User> users = new ArrayList<User>();
+        Set<User> users = new HashSet<User>();
 
         try {
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("id"));
+                user.setId(rs.getInt("user_id"));
                 user.setName(rs.getString("name"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
@@ -226,7 +225,7 @@ public class UserDao extends UserDaoInterface {
     }
 
     @Override
-    public List<Application> computeApps(int id) {
+    public Set<Application> computeApps(int id) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -264,7 +263,25 @@ public class UserDao extends UserDaoInterface {
 
     @Override
     public User update(User user) {
-        return null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "UPDATE user SET name ='"+ user.getName()+"', username = '"+ user.getUsername()+"', password = '"+user.getPassword()+"' where id =" + user.getId() + ";";
+
+        System.out.println(query);
+        try {
+            con = ConnectionFactory.getConnection();
+            stm = con.prepareStatement(query);
+            stm.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionFactory.close(rs);
+            ConnectionFactory.close(stm);
+            ConnectionFactory.close(con);
+        }
+
+        return user;
     }
 
 

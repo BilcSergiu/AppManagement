@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,7 +88,7 @@ public abstract class JdbcAbstractDao<T> implements AbstractDAO<T> {
         return sb.toString();
     }
 
-    public List<T> findAll() {
+    public Set<T> findAll() {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -124,7 +124,7 @@ public abstract class JdbcAbstractDao<T> implements AbstractDAO<T> {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             System.out.println(resultSet.toString());
-            return createObjects(resultSet).get(0);
+            return createObjects(resultSet).iterator().next();
 
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
@@ -136,7 +136,7 @@ public abstract class JdbcAbstractDao<T> implements AbstractDAO<T> {
         return null;
     }
 
-    public abstract List<T> createObjects(ResultSet resultSet);
+    public abstract Set<T> createObjects(ResultSet resultSet);
 
 
     public T save(T t) {

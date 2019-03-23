@@ -22,17 +22,6 @@ public class ConnectionFactory {
         }
     }
 
-    private Connection createConnection() {
-        try {
-            Connection con = DriverManager.getConnection(dburl, user, pass);
-            return con;
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static Connection getConnection() {
         return singleInstance.createConnection();
     }
@@ -68,5 +57,16 @@ public class ConnectionFactory {
                 e.printStackTrace();
             }
         }
+    }
+
+    private Connection createConnection() {
+        try {
+            Connection con = DriverManager.getConnection(dburl, user, pass);
+            return con;
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+        return null;
     }
 }

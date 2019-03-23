@@ -1,8 +1,6 @@
 package com.example.ApplicationsManager.viewmodel;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 public class UserViewModel {
 

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,40 +23,40 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class AppController {
 
-   // private AppRepository appRepository;
-   // private UserRepository userRepository;
+    // private AppRepository appRepository;
+    // private UserRepository userRepository;
     private AppDaoInterface appDao;
     private ModelViewMapper mapper;
     private UserDao userDao;
     private DaoFactory factory;
 
     @Autowired
-    public AppController(ModelViewMapper mapper){
+    public AppController(ModelViewMapper mapper) {
         this.mapper = mapper;
-        this.factory=new DaoFactory();
-        this.appDao = factory.getAppDao(1);
+        this.factory = new DaoFactory();
+        this.appDao = factory.getAppDao(2);
         this.userDao = new UserDao();
     }
 
     // Modificat pentru jdbc normal querry
-    @RequestMapping(value ="/all", method = RequestMethod.POST)
-    public List<AppViewModel> getAll(){
-        List<Application> apps = new ArrayList<>();
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public Set<AppViewModel> getAll() {
+        Set<Application> apps = new HashSet<>();
 
         appDao.findAll().forEach(apps::add);
 
-        List<AppViewModel> appViews = apps.stream().map(app->this.mapper.convertToAppViewModel(app)).collect(Collectors.toList());
+        Set<AppViewModel> appViews = apps.stream().map(app -> this.mapper.convertToAppViewModel(app)).collect(Collectors.toSet());
 
         return appViews;
     }
 
     // modificat
     @GetMapping("/byId/{id}")
-    public AppViewModel byId(@PathVariable int id){
+    public AppViewModel byId(@PathVariable int id) {
 
         Application app = this.appDao.findById(id);
 
-        if(app == null){
+        if (app == null) {
             throw new EntityNotFoundException();
         }
 
@@ -67,15 +67,15 @@ public class AppController {
 
     // modificat
     @GetMapping("/appById/{id}")
-    public Application getAppById(@PathVariable int id){
+    public Application getAppById(@PathVariable int id) {
         //Application app = this.appRepository.findById(id).get();
         Application app = this.appDao.findById(id);
 
-        if(app == null){
+        if (app == null) {
             throw new EntityNotFoundException();
         }
 
-       // AppViewModel appView = this.mapper.convertToAppViewModel(app);
+        // AppViewModel appView = this.mapper.convertToAppViewModel(app);
 
         app.setUsers(appDao.computeUsers(app.getId()));
         //System.out.println(app.getUsers().get(0).getName());
@@ -95,36 +95,52 @@ public class AppController {
         return app;
     }
 
+    // nou adaugat
+    @PutMapping("/update/{appId}")
+    public Application update(@PathVariable int appId, @RequestBody Application application, BindingResult bindingResult) throws ValidationException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException("Eroare la legare");
+        }
+
+        // User user = this.mapper.convertToUser(userViewModel);
+
+        Application app = this.appDao.update(application);
+
+        return app;
+
+    }
+
+
     // modificat
-    @RequestMapping(value ="/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable int id){
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public void deleteById(@PathVariable int id) {
         Application app = this.appDao.findById(id);
         this.appDao.delete(app);
     }
 
     // modificat
-    @RequestMapping(value ="/delete", method = RequestMethod.DELETE)
-    public void deleteUsingBody(@RequestBody int id){
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public void deleteUsingBody(@RequestBody int id) {
         Application app = this.appDao.findById(id);
         this.appDao.delete(app);
     }
 
     @PostMapping("/addUser/{appId}")
-    public Application byId(@PathVariable int appId, @RequestBody UserViewModel userViewModel, BindingResult bindingResult) throws ValidationException {
+    public Application addUser(@PathVariable int appId, @RequestBody UserViewModel userViewModel, BindingResult bindingResult) throws ValidationException {
         if (bindingResult.hasErrors()) {
             throw new ValidationException("Eroare la legare");
         }
 
         Application app = this.appDao.findById(appId);
 
-        if(app == null){
+        if (app == null) {
             throw new EntityNotFoundException();
         }
 
         User user = this.mapper.convertToUser(userViewModel);
         user.getApps().add(app);
 
-        return this.appDao.addUser(app,user);
+        return this.appDao.addUserToApp(app, user);
 
     }
 
@@ -147,26 +163,12 @@ public class AppController {
     }*/
 
     @GetMapping("/getUsers/{appId}")
-    public List<User> getUsers(@PathVariable int appId){
-        List<User> users = new ArrayList<>();
+    public Set<User> getUsers(@PathVariable int appId) {
+        Set<User> users = new HashSet<>();
 
         users = this.appDao.computeUsers(appId);
 
         return users;
-    }
-
-
-    @PostMapping("/update/{appId}")
-    public Application update(@PathVariable int appId, @RequestBody Application userViewModel, BindingResult bindingResult) throws ValidationException {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationException("Eroare la legare");
-        }
-
-       // User user = this.mapper.convertToUser(userViewModel);
-       Application app = this.appDao.update(userViewModel);
-
-        return app;
-
     }
 
 

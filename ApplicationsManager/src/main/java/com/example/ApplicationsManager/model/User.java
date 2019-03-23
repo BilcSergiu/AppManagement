@@ -1,27 +1,28 @@
 package com.example.ApplicationsManager.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
+    @Column(name = "user_id")
     private int id;
 
     private String name;
     private String username;
     private String password;
 
-    @ManyToMany(targetEntity = Application.class, cascade = {CascadeType.ALL, CascadeType.MERGE},fetch=FetchType.EAGER)
-    @JoinTable(name = "application_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "application_id"))
-    private List<Application> apps;
+
+    //@ManyToMany( mappedBy = "users")
+    private Set<Application> apps;
 
     public User(){
-        this.apps = new ArrayList<Application>();
+        this.apps = new HashSet<Application>();
     }
 
     public User(String name){
@@ -55,17 +56,12 @@ public class User {
         this.name = name;
     }
 
-    @ManyToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }  )
-    @JoinTable(
-            name = "application_user",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "application_id")}
-    )
-    public List<Application> getApps() {
+
+    public Set<Application> getApps() {
         return apps;
     }
 
-    public void setApps(List<Application> apps) {
+    public void setApps(Set<Application> apps) {
         this.apps = apps;
     }
 
@@ -91,5 +87,9 @@ public class User {
 
     public void addApplication(Application a){
         this.apps.add(a);
+    }
+
+    public String toString(){
+        return "User: "+this.getId()+","+this.getName()+","+this.getUsername()+","+this.getPassword();
     }
 }

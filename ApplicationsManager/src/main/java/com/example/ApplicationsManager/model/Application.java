@@ -1,28 +1,30 @@
 package com.example.ApplicationsManager.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "application")
-
 public class Application {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    public int id;
+    @GeneratedValue
+    @Column(name = "application_id")
+    private int id;
 
-    public String name;
-    public String technologies;
-    public String version;
+    private String name;
+    private String technologies;
+    private String version;
 
-    public List<User> users;
+    @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinTable(name = "application_user",
+            joinColumns = @JoinColumn(name = "application_id", referencedColumnName = "application_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+    private Set<User> users;
 
     public Application(){
-        this.users = new ArrayList<User>();
+        this.users = new HashSet<>();
     }
 
     public Application(String name){
@@ -55,12 +57,11 @@ public class Application {
         this.name = name;
     }
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE},fetch=FetchType.EAGER, mappedBy = "apps", targetEntity = User.class)
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -86,5 +87,9 @@ public class Application {
 
     public void addUser(User u){
         this.users.add(u);
+    }
+
+    public String toString(){
+        return "Application: "+this.getId()+","+this.getName()+","+this.getTechnologies()+","+this.getVersion();
     }
 }

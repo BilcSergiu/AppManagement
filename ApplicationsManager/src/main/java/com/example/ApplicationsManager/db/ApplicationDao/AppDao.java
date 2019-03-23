@@ -10,8 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AppDao extends AppDaoInterface {
 
@@ -85,7 +85,7 @@ public class AppDao extends AppDaoInterface {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             System.out.println(resultSet.toString());
-            return createObjects(resultSet).get(0);
+            return createObjects(resultSet).iterator().next();
 
         } catch (SQLException e) {
             System.out.println("ApplicationDAO:findById " + e.getMessage());
@@ -118,16 +118,14 @@ public class AppDao extends AppDaoInterface {
         return t;
     }
 
+    public Set<Application> createObjects(ResultSet rs) {
 
-    @Override
-    public List<Application> createObjects(ResultSet rs) {
-
-        List<Application> apps = new ArrayList<Application>();
+        Set<Application> apps = new HashSet<>();
 
         try {
             while (rs.next()) {
                 Application app = new Application();
-                app.setId(rs.getInt("id"));
+                app.setId(rs.getInt("application_id"));
                 app.setName(rs.getString("name"));
                 app.setTechnologies(rs.getString("technologies"));
                 app.setVersion(rs.getString("version"));
@@ -141,7 +139,7 @@ public class AppDao extends AppDaoInterface {
     }
 
     @Override
-    public List<Application> findAll() {
+    public Set<Application> findAll() {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -205,11 +203,11 @@ public class AppDao extends AppDaoInterface {
     }
 
     @Override
-    public Application addUser(Application t, User user) {
+    public Application addUserToApp(Application t, User user) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        String query = insertAppsUsers(t.id, user.getId());
+        String query = insertAppsUsers(t.getId(), user.getId());
         System.out.println(query);
         try {
             connection = ConnectionFactory.getConnection();
@@ -226,7 +224,7 @@ public class AppDao extends AppDaoInterface {
     }
 
     @Override
-    public List<User> computeUsers(int id) {
+    public Set<User> computeUsers(int id) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -252,7 +250,6 @@ public class AppDao extends AppDaoInterface {
     }
 
     private String getAllUsersQuery(int id) {
-
         return "select user.* from user, application_user where user.id = application_user.user_id and application_user.application_id=" + id + ";";
     }
 
@@ -265,7 +262,25 @@ public class AppDao extends AppDaoInterface {
 
     @Override
     public Application update(Application application) {
-        return null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "UPDATE application SET name ='"+ application.getName()+"', technologies = '"+ application.getTechnologies()+"', version = '"+application.getVersion()+"' where id =" + application.getId() + ";";
+
+        System.out.println(query);
+        try {
+            con = ConnectionFactory.getConnection();
+            stm = con.prepareStatement(query);
+            stm.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionFactory.close(rs);
+            ConnectionFactory.close(stm);
+            ConnectionFactory.close(con);
+        }
+
+        return application;
     }
 }
 

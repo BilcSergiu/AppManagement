@@ -8,10 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HbUserDao extends UserDaoInterface {
 
@@ -22,15 +22,16 @@ public class HbUserDao extends UserDaoInterface {
     }
 
     @Override
-    public List<User> findAll() {
+    public Set<User> findAll() {
         Session session = factory.openSession();
         Transaction tx = null;
-        List<User> apps = new ArrayList<>();
+        Set<User> apps = new HashSet<>();
 
         try {
             tx = session.beginTransaction();
-            apps = session.createQuery("From User").list();
+            List<User> userss = session.createQuery("From User").list();
             tx.commit();
+            return  userss.stream().collect(Collectors.toSet());
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
@@ -48,7 +49,7 @@ public class HbUserDao extends UserDaoInterface {
 
         try {
             tx = session.beginTransaction();
-            app =  (User) session.get(User.class,id);
+            app = session.get(User.class, id);
             tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -57,11 +58,6 @@ public class HbUserDao extends UserDaoInterface {
         }
 
         return app;
-    }
-
-    @Override
-    public List<User> createObjects(ResultSet resultSet) {
-        return null;
     }
 
     @Override
@@ -103,7 +99,28 @@ public class HbUserDao extends UserDaoInterface {
     }
 
     @Override
-    public User update(User application) {
+    public User update(User u) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        User user = new User();
+        try {
+            tx = session.beginTransaction();
+            user = (User)session.load(User.class, u.getId());
+            System.out.println(u.toString());
+//            user.setId(u.getId());
+            user.setName(u.getName());
+            user.setUsername(u.getUsername());
+            user.setPassword(u.getPassword());
+            user.setApps(u.getApps());
+            session.update(user);
+            tx.commit();
+            return user;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
         return null;
     }
 
@@ -128,7 +145,7 @@ public class HbUserDao extends UserDaoInterface {
     }
 
     @Override
-    public List<Application> computeApps(int id) {
+    public Set<Application> computeApps(int id) {
         return null;
     }
 }

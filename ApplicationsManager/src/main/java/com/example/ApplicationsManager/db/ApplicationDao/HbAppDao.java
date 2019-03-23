@@ -8,10 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HbAppDao extends AppDaoInterface {
 
@@ -22,15 +22,16 @@ public class HbAppDao extends AppDaoInterface {
     }
 
     @Override
-    public List<Application> findAll() {
+    public Set<Application> findAll() {
         Session session = factory.openSession();
         Transaction tx = null;
-        List<Application> apps = new ArrayList<>();
+        Set<Application> apps = new HashSet<>();
 
         try {
             tx = session.beginTransaction();
-            apps = session.createQuery("From Application").list();
+            List<Application> appss = session.createQuery("From Application").list();
             tx.commit();
+            return  appss.stream().collect(Collectors.toSet());
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
@@ -49,7 +50,7 @@ public class HbAppDao extends AppDaoInterface {
 
         try {
             tx = session.beginTransaction();
-            app =  (Application) session.get(Application.class,id);
+            app = session.get(Application.class, id);
             tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -58,11 +59,6 @@ public class HbAppDao extends AppDaoInterface {
         }
 
         return app;
-    }
-
-    @Override
-    public List<Application> createObjects(ResultSet resultSet) {
-        return null;
     }
 
     @Override
@@ -110,7 +106,7 @@ public class HbAppDao extends AppDaoInterface {
         Application app = new Application();
         try {
             tx = session.beginTransaction();
-           app = session.load(Application.class,application.getId());
+            app = session.load(Application.class, application.getId());
             app.setId(application.getId());
             app.setName(application.getName());
             app.setTechnologies(application.getTechnologies());
@@ -129,19 +125,32 @@ public class HbAppDao extends AppDaoInterface {
     }
 
     @Override
-    public Application addUser(Application t, User user) {
+    public Application addUserToApp(Application t, User user) {
         Session session = factory.openSession();
         Transaction tx = null;
+        Application app = new Application();
+        User user1 = new User();
 
         try {
             tx = session.beginTransaction();
-            Application app = session.load(Application.class,t.getId());
-            app.addUser(user);
-            session.update(app);
-            User user1 = session.load(User.class,user.getId());
+            app = session.get(Application.class, t.getId());
+            app.setName(t.getName());
+            app.setVersion(t.getVersion());
+            app.setTechnologies(t.getTechnologies());
+            System.out.println(app.toString());
+
+            user1 = session.get(User.class, user.getId());
+            System.out.println(user1.toString());
             user1.addApplication(t);
+            Set<User> uss = new HashSet<>();
+            uss.add(user1);
+            app.setUsers(uss);
+
+            session.merge(app);
             session.merge(user1);
             tx.commit();
+
+            return app;
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
@@ -152,7 +161,7 @@ public class HbAppDao extends AppDaoInterface {
     }
 
     @Override
-    public List<User> computeUsers(int id) {
+    public Set<User> computeUsers(int id) {
         return null;
     }
 }
