@@ -1,0 +1,50 @@
+
+.btn-css {
+    color: #FFD700;
+    border-color: #8B008B;
+}
+  
+ .btn-css:hover {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-css:focus,  .btn-css.focus {
+    box-shadow: 0 0 0 0.2rem rgb(139,0,139);
+  }
+  
+  .btn-css.disabled, .btn-css:disabled {
+    color: #8B008B;
+    background-color: transparent;
+  }
+  
+  .btn-css:not(:disabled):not(.disabled):active, .btn-css:not(:disabled):not(.disabled).active,
+  .show > .btn-css.dropdown-toggle {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-css:not(:disabled):not(.disabled):active:focus, .btn-css:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-csscess.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgb(139,0,139);
+  }
+
+  .title-css {
+    color: #FFD700 !important;
+  }
+  
+  a.title-css:hover, a.title-css:focus {
+    color: #FFD700 !important;
+  }
+
+
+  .navbar-header{
+    width:350px;
+    margin-left:12% !important;
+    
+}
+.content{
+    margin-top:100px;
+}

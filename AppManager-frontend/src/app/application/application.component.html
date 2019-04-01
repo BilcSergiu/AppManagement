@@ -1,0 +1,192 @@
+
+
+<div class="container">
+    <div class="row" style="margin-top: 28px; ">
+      <div id="div1" class="container">
+        <div class="row">
+          <div class="col-md-0">
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid" novalidate class="feedback-form">
+              <!-- Name -->
+              <div class="form-group " style=" margin-left:3%;">
+                <label for="name">Application name</label>
+                <input type="text" id="name" class="form-control" name="name" placeholder="Insert the app's name"
+                  [(ngModel)]="model.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"
+                  required />
+                <!-- input validation group -->
+                <div *ngIf="f.submitted && name.invalid" class="invalid-input">
+                  <!-- individual validation errors -->
+                  <div *ngIf="name.errors?.required">Field is required</div>
+                </div>
+  
+               
+                <div class="single-upload">
+                    <div id="uploadfile" style="display: block; margin-top: 25px; margin-left:3%;">
+                        <label for="the_file">File:</label>
+                        <input id="singleFileUploadInput" (change)="selectFile($event)" type="file" name="file" class="file-input" required />
+                    </div>
+                  <div id="uploadurl" style="display: none; margin-top: 25px; margin-left:3%;">
+                    <label for="the_url">Url:</label>
+                    <input type="text" name="url" id="the_url" size="20">
+                  </div>
+                </div>
+              </div>
+              
+              <button type="submit" (click)="addApp()" class="btn btn-info pull-right"
+                style="margin-top: 12px; margin-left:3%">
+                <i class="fa fa-envelope-o"></i>
+                <span> Add app</span>
+              </button>
+            </form>
+  
+  
+          </div>
+          <div class="offset-3"></div>
+        </div>
+  
+  
+      </div>
+  
+      <div id="div2" class="container">
+        <!--   Notes Panel -->
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>All apps</h3>
+              <p *ngIf="this.apps.length === 0">There are no apps to display</p>
+            </div>
+  
+            <div class="card-columns">
+              <div *ngFor="let app of apps" class="card inline-block bg-light mb-3" style="width: 13rem;">
+                <img href="#" class="card-img-top img-fluid" src="{{app.image_url}}" alt="Card image cap">
+                <div class="card-body " style="padding: 8px; margin-top: 8px;">
+                  <a href="#" (click)="selectApp(app)" id="card" data-toggle="modal" data-target="#appDetailsModal"
+                    data-whatever="app"></a>
+                  <h5 class="card-title">{{app.name}}</h5>
+                  <p class="card-text">{{app.id}}</p>
+                  
+  
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="appDetailsModal" tabindex="-1" role="dialog" aria-labelledby="appDetailsModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+  
+          <div class="modal-content">
+  
+            <div class="modal-header">
+              <h5 class="modal-title" id="appDetailsModal">{{selectedApp.name}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+  
+            <div class="modal-body">
+              <form name="form1" #f="ngForm" (ngSubmit)="f.form1.valid">
+  
+                <div class="form-group">
+                  <label for="rec-name">Name:</label>
+                  <input type="text" class="form-control" id="rec-name" name="name" [(ngModel)]="appToUpdate.name"
+                    #name="ngModel" placeholder={{selectedApp.name}}>
+                </div>
+  
+                <div class="form-group">
+                  <label for="rec-technologies">Techonolgies:</label>
+                  <input type="text" class="form-control" id="rec-technologies" name="technologies"
+                    [(ngModel)]="appToUpdate.technologies" #name="ngModel" placeholder={{selectedApp.technologies}}>
+                </div>
+  
+                <div class="form-group">
+                  <label for="rec-version" class="col-form-label">Version:</label>
+                  <input type="text" class="form-control" id="rec-version" name="version"
+                    [(ngModel)]="appToUpdate.version" #name="ngModel" placeholder={{selectedApp.version}}>
+                </div>
+  
+                <div class="list-group">
+                  <label>Users with access:</label>
+                  <ul *ngFor="let user of users">
+                    <li class="list-group-item clearfix">{{user.name}}
+                      <span class="pull-right1 button-group">
+                        <a type="button" class="btn btn-css"  data-toggle="collapse" data-target="#collapseEx" aria-expanded="false" style="margin:5px;"><span class="glyphicon glyphicon-edit"></span>
+                          #{{user.id}}</a>
+                        <a class="btn btn-add1" (click)="deleteUserFromApp(user)"><span
+                            class="glyphicon glyphicon-remove"></span> Delete</a>
+                      </span>
+                      <div class="collapse" id="collapseEx">
+                          <div class="card card-body">
+                           {{user.id}}, {{user.name}}, {{user.username}}
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+  
+  
+              </form>
+            </div>
+  
+            <div class="modal-footer">
+              <button type="button" class="btn btn-css mr-auto" (click)="deleteApp()" data-dismiss="modal">Delete</button>
+              <button type="button" class="btn btn-css" (click)="getAllUsers()" data-dismiss="modal" data-toggle="modal"
+                data-target="#addUserToAppModal">Add user</button>
+              <button type="button" type="submit" (click)="updateApp()" class="btn btn-add1">Update</button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="modal fade" id="addUserToAppModal" tabindex="-1" role="dialog" aria-labelledby="addUserToAppModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+  
+          <div class="modal-content">
+  
+            <div class="modal-header">
+              <h5 class="modal-title" id="addUserToAppModal">Users to add to {{selectedApp.name}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+  
+            <div class="modal-body">
+              <form name="form1" #f="ngForm" (ngSubmit)="f.form1.valid">
+  
+                <div class="list-group">
+                  <label>Users:</label>
+                  <ul *ngFor="let user of allUsers" class="special-hover">
+                    <li class="list-group-item clearfix">{{user.name}}
+                      <span class="pull-right1 button-group">
+                        <a class="btn btn-css" style="margin:5px;" (click)="removeUserFromList(user)"><span
+                            class="glyphicon glyphicon-edit"></span> Remove</a>
+                        <a class="btn btn-add1" (click)="addUserToList(user)"><span
+                            class="glyphicon glyphicon-remove"></span> Add</a>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+  
+  
+              </form>
+            </div>
+  
+            <div class="modal-footer">
+              <button type="button" class="btn btn-css mr-auto" data-dismiss="modal" data-toggle="modal"
+                data-target="#appDetailsModal">Back</button>
+              <button href="" type="button" class="btn btn-css" (click)="addTheUsers() && window.location.reload()"
+                data-dismiss="modal">Add users</button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  

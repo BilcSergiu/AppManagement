@@ -1,0 +1,106 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.card-deck .card {
+    max-width: calc(25% - 30px);
+}
+
+
+.btn-add1 {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-add1:hover {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-add1:focus, .btn-add1.focus {
+    color: #8B008B;
+    border-color: currentColor;
+    background-color: #fff;
+  }
+
+  a.btn-add1:focus, a.btn-add1.focus {
+    color: #8B008B;
+    border-color: currentColor;
+    background-color: #fff;
+  }
+
+  .btn-add1.disabled, .btn-add1:disabled {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-add1:not(:disabled):not(.disabled):active, .btn-add1:not(:disabled):not(.disabled).active,
+  .show > .btn-add1.dropdown-toggle {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-add1:not(:disabled):not(.disabled):active:focus, .btn-add1:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-add1.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5);
+  }
+
+  
+  
+
+  a.btn-add1 {
+    color: white !important;
+  }
+  
+  
+
+  
+
+.btn-css {
+    color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-css:hover {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-css:focus,  .btn-css.focus {
+    box-shadow: 0 0 0 0.2rem rgb(139,0,139);
+  }
+  
+  .btn:hover,
+.btn:focus {
+  color: white;
+  border-color: currentColor;
+  background-color: #8B008B;
+}
+  .btn-css.disabled, .btn-css:disabled {
+    color: #8B008B;
+    background-color: transparent;
+  }
+  
+  .btn-css:not(:disabled):not(.disabled):active, .btn-css:not(:disabled):not(.disabled).active,
+  .show > .btn-css.dropdown-toggle {
+    color: #fff;
+    background-color: #8B008B;
+    border-color: #8B008B;
+  }
+  
+  .btn-css:not(:disabled):not(.disabled):active:focus, .btn-css:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-csscess.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgb(139,0,139);
+  }
+
+  a.btn-css:hover, a.btn-css:focus{
+    color: white !important;
+  }
+
+  a.btn-css {
+    color: #8B008B !important;
+  }
+  
