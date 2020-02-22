@@ -1,6 +1,7 @@
 package com.example.applicationsmanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.opencsv.bean.CsvBindByPosition;
 import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
@@ -19,11 +20,16 @@ public class Application {
     @Column(name = "id")
     private int id;
 
+    @CsvBindByPosition(position = 0)
     private String name;
+    @CsvBindByPosition(position = 1)
     private String technologies;
+    @CsvBindByPosition(position = 2)
     private String version;
+    @CsvBindByPosition(position = 3)
     private String image_url;
 
+    @CsvBindByPosition(position = 4)
     @JsonIgnore
     private Set<User> users;
 
@@ -45,6 +51,15 @@ public class Application {
 
     public Application(String name, String tech, String ver, String url){
         this();
+        this.name=name;
+        this.technologies= tech;
+        this.version= ver;
+        this.image_url= url;
+    }
+
+    public Application(int id,String name, String tech, String ver, String url){
+        this();
+        this.id=id;
         this.name=name;
         this.technologies= tech;
         this.version= ver;
@@ -118,5 +133,13 @@ public class Application {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    @Override
+    public String toString() {
+        return "Application{" +
+                "id=" + id +
+                "; name='" + name + '\'' +
+                '}';
     }
 }

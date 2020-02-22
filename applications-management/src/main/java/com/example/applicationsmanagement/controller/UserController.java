@@ -1,21 +1,29 @@
 package com.example.applicationsmanagement.controller;
 
-import com.example.applicationsmanagement.ModelViewMapper;
-import com.example.applicationsmanagement.db.AbstractDAO;
-import com.example.applicationsmanagement.db.ApplicationDao.AppDaoInterface;
-import com.example.applicationsmanagement.db.DaoFactory;
-import com.example.applicationsmanagement.db.UserDao.UserDaoInterface;
+import com.example.applicationsmanagement.Service.UserService;
 import com.example.applicationsmanagement.model.Application;
 import com.example.applicationsmanagement.model.User;
+import com.example.applicationsmanagement.validator.NameValidator;
 import com.example.applicationsmanagement.viewmodel.AppViewModel;
 import com.example.applicationsmanagement.viewmodel.UserViewModel;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ValidationException;
-import java.util.HashSet;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,139 +32,83 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class UserController {
 
-    private ModelViewMapper mapper;
-    private DaoFactory factory;
-    private UserDaoInterface userDao;
-    private AppDaoInterface appDao;
-
     @Autowired
-    public UserController(ModelViewMapper mapper) {
-
-        this.mapper = mapper;
-        this.factory = new DaoFactory();
-        this.userDao = factory.getUserDao(2);
-        this.appDao = factory.getAppDao(2);
-    }
+    private UserService service;
 
     // modificat
     @GetMapping(value = "/all")
     public Set<User> getAll() {
-        Set<User> users = new HashSet<>();
-
-        this.userDao.findAll().forEach(users::add);
-
-        return users;// users.stream().map(user -> this.mapper.convertToUserViewModel(user)).collect(Collectors.toSet());
-    }
+       return service.getAll();
+     }
 
     // modificat
     @GetMapping("/byId/{id}")
     public UserViewModel byId(@PathVariable int id) {
-        User user = this.userDao.findById(id);
-
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-
-        UserViewModel userView = this.mapper.convertToUserViewModel(user);
-
-        return userView;
+        return this.service.byId(id);
     }
 
     // modificat
     @GetMapping("/userById/{id}")
     public User userById(@PathVariable int id) {
-        // User user = this.userRepository.findById(id).get();
-
-        User user = this.userDao.findById(id);
-
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-
-        user.setApps(userDao.computeApps(user.getId()));
-
-        return user;
+       return this.service.userById(id);
     }
 
     // modificat
     @PostMapping("/add")
     public User save(@RequestBody User userViewModel, BindingResult bindingResult) throws ValidationException {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationException("Eroare la legare");
-        }
-
-       // User user = this.mapper.convertToUser(userViewModel);
-
-        this.userDao.save(userViewModel);
-
-        return userViewModel;
+       return this.service.save(userViewModel);
     }
 
     // modificat
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable int id) {
-        User user = this.userDao.findById(id);
-        this.userDao.delete(user);
-        //this.userRepository.deleteById(id);
+       this.service.delete(id);
     }
 
     // modificat
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public void deleteUsingBody(@RequestBody int id) {
-        User app = this.userDao.findById(id);
-        this.userDao.delete(app);
+        this.service.delete(id);
     }
 
     @PutMapping(value="deleteUser/{id}")
     public User deleteUsingBody(@PathVariable int id,@RequestBody Application appl) {
-        User u = this.userDao.findById(id);
-        Application app = this.appDao.findById(appl.getId());
-
-        return this.userDao.deleteAppFromUser(u,app);
+       return this.service.deleteAppFromUser(id,appl);
     }
-
 
     @PostMapping("/addApp/{userId}")
     public User addApp(@PathVariable int userId, @RequestBody AppViewModel appViewModel, BindingResult bindingResult) throws ValidationException {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationException("Eroare la legare");
-        }
-
-        //User user = this.userRepository.findById(userId).get();
-        User user = this.userDao.findById(userId);
-
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-
-        Application app = this.mapper.convertToApp(appViewModel);
-
-        app.getUsers().add(user);
-
-        return this.userDao.addAppToUser(user, app);
+        return this.service.addApp(userId,appViewModel);
     }
-
 
     @GetMapping("/getApps/{userId}")
     public Set<Application> getApps(@PathVariable int userId) {
-        Set<Application> apps = new HashSet<>();
-
-        apps = this.userDao.computeApps(userId);
-
-        return apps;
+       return this.service.getApps(userId);
     }
 
     @PutMapping("/update")
     public User update( @RequestBody User user, BindingResult bindingResult) throws ValidationException {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationException("Eroare la legare");
+       return this.service.update(user);
+    }
+
+    @GetMapping("/export")
+    public void exportCSV(HttpServletResponse response) {
+
+        try {
+            this.service.exportCSV(response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        System.out.println(user.toString());
-        User user1 = this.userDao.update(user);
+    }
 
-        return user1;
-
+    @PostMapping("/import")
+    public void importUsers(MultipartFile file)  {
+        try {
+            this.service.importUsers(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

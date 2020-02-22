@@ -7,9 +7,14 @@ import com.example.applicationsmanagement.db.UserDao.HbUserDao;
 import com.example.applicationsmanagement.db.UserDao.UserDao;
 import com.example.applicationsmanagement.db.UserDao.UserDaoInterface;
 
+
+
 public class DaoFactory {
 
-    public AppDaoInterface getAppDao(int type){
+    public DaoFactory() {
+    }
+
+    public static AppDaoInterface getAppDao(int type){
         if(type == 1){
             return new AppDao();
         }else{
@@ -17,7 +22,7 @@ public class DaoFactory {
         }
     }
 
-    public UserDaoInterface getUserDao(int type){
+    public static UserDaoInterface getUserDao(int type){
         if(type == 1){
             return new UserDao();
         }else{

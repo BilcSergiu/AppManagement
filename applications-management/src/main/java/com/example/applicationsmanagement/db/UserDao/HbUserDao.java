@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HbUserDao extends UserDaoInterface {
+public class HbUserDao implements UserDaoInterface {
 
     private static SessionFactory factory;
 

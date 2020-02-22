@@ -1,0 +1,39 @@
+2019-05-23 17:09:49,089  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:09:49,105  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - getAll
+2019-05-23 17:09:49,105 DEBUG [http-nio-8080-exec-1] - com.example.applicationsmanagement.Service.AppService.getAll 65 - getAll is executed!
+2019-05-23 17:09:49,105  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.Service.AppService.getAll 68 - All adds method accessed!
+2019-05-23 17:09:49,224  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - getAll Returned with [Application{id=4; name='Javascript'}, Application{id=15; name='Safari'}, Application{id=6; name='Intelij'}, Application{id=16; name='App'}, Application{id=17; name='App2'}]
+2019-05-23 17:09:49,224  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by getAll is 135ms
+2019-05-23 17:09:56,470  INFO [http-nio-8080-exec-7] - com.example.applicationsmanagement.Service.UserService.getAll 60 - getAllUsers executed with success
+2019-05-23 17:09:57,780  INFO [http-nio-8080-exec-8] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:09:57,784  INFO [http-nio-8080-exec-8] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - getAll
+2019-05-23 17:09:57,784 DEBUG [http-nio-8080-exec-8] - com.example.applicationsmanagement.Service.AppService.getAll 65 - getAll is executed!
+2019-05-23 17:09:57,784  INFO [http-nio-8080-exec-8] - com.example.applicationsmanagement.Service.AppService.getAll 68 - All adds method accessed!
+2019-05-23 17:09:57,796  INFO [http-nio-8080-exec-8] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - getAll Returned with [Application{id=4; name='Javascript'}, Application{id=15; name='Safari'}, Application{id=6; name='Intelij'}, Application{id=16; name='App'}, Application{id=17; name='App2'}]
+2019-05-23 17:09:57,796  INFO [http-nio-8080-exec-8] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by getAll is 16ms
+2019-05-23 17:51:55,469  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:51:55,473  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - exportCSV
+2019-05-23 17:51:55,489 DEBUG [http-nio-8080-exec-1] - com.example.applicationsmanagement.Service.AppService.getAll 65 - getAll is executed!
+2019-05-23 17:51:55,489  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.Service.AppService.getAll 68 - All adds method accessed!
+2019-05-23 17:51:55,797  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - exportCSV Returned with Apps exported
+2019-05-23 17:51:55,797  INFO [http-nio-8080-exec-1] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by exportCSV is 328ms
+2019-05-23 17:52:07,733  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:52:07,737  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - importCSV
+2019-05-23 17:52:07,833  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.Service.AppService.save 119 - Added a new app with success
+2019-05-23 17:52:07,837  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.Service.AppService.save 119 - Added a new app with success
+2019-05-23 17:52:07,845  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.Service.AppService.save 119 - Added a new app with success
+2019-05-23 17:52:07,853  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.Service.AppService.save 119 - Added a new app with success
+2019-05-23 17:52:07,853  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - importCSV Returned with Apps imported
+2019-05-23 17:52:07,853  INFO [http-nio-8080-exec-2] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by importCSV is 120ms
+2019-05-23 17:52:10,421  INFO [http-nio-8080-exec-3] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:52:10,421  INFO [http-nio-8080-exec-3] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - getAll
+2019-05-23 17:52:10,421 DEBUG [http-nio-8080-exec-3] - com.example.applicationsmanagement.Service.AppService.getAll 65 - getAll is executed!
+2019-05-23 17:52:10,421  INFO [http-nio-8080-exec-3] - com.example.applicationsmanagement.Service.AppService.getAll 68 - All adds method accessed!
+2019-05-23 17:52:10,429  INFO [http-nio-8080-exec-3] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - getAll Returned with [Application{id=4; name='Javascript'}, Application{id=21; name='Javascript'}, Application{id=18; name='Intelij'}, Application{id=19; name='Safari'}, Application{id=15; name='Safari'}, Application{id=20; name='App2'}, Application{id=6; name='Intelij'}, Application{id=16; name='App'}, Application{id=17; name='App2'}]
+2019-05-23 17:52:10,429  INFO [http-nio-8080-exec-3] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by getAll is 8ms
+2019-05-23 17:52:41,084  INFO [http-nio-8080-exec-6] - com.example.applicationsmanagement.aop.ApplicationAspect.before 22 - Before
+2019-05-23 17:52:41,084  INFO [http-nio-8080-exec-6] - com.example.applicationsmanagement.aop.ApplicationAspect.before 23 - exportCSV
+2019-05-23 17:52:41,084 DEBUG [http-nio-8080-exec-6] - com.example.applicationsmanagement.Service.AppService.getAll 65 - getAll is executed!
+2019-05-23 17:52:41,084  INFO [http-nio-8080-exec-6] - com.example.applicationsmanagement.Service.AppService.getAll 68 - All adds method accessed!
+2019-05-23 17:52:41,172  INFO [http-nio-8080-exec-6] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 31 - exportCSV Returned with Apps exported
+2019-05-23 17:52:41,172  INFO [http-nio-8080-exec-6] - com.example.applicationsmanagement.aop.ApplicationAspect.afterReturning 32 - Time Taken by exportCSV is 88ms

@@ -1,5 +1,7 @@
 package com.example.applicationsmanagement.db.DbAccess;
 
+import com.example.applicationsmanagement.db.ApplicationDao.AppDaoInterface;
+
 import java.sql.*;
 import java.util.logging.Logger;
 
@@ -47,6 +49,7 @@ public class ConnectionFactory {
             }
         }
     }
+
 
     public static void close(ResultSet rst) {
         if (rst != null) {

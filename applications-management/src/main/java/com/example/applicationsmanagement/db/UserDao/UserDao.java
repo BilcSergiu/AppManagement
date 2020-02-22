@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserDao extends UserDaoInterface {
+public class UserDao implements UserDaoInterface {
 
     private String createInsertQuery(User t) {
         StringBuilder sb = new StringBuilder();

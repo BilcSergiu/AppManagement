@@ -1,6 +1,7 @@
 package com.example.applicationsmanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.opencsv.bean.CsvBindByPosition;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,16 +11,22 @@ import java.util.Set;
 @Entity
 public class User {
 
+    //@CsvBindByPosition(position = 0)
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
+    @CsvBindByPosition(position = 0)
     private String name;
+    @CsvBindByPosition(position = 1)
     private String username;
+    @CsvBindByPosition(position = 2)
     private String password;
+    @CsvBindByPosition(position = 3)
     private String image_url;
 
+    @CsvBindByPosition(position = 4)
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
     private Set<Application> apps;
@@ -40,13 +47,6 @@ public class User {
         this.id=id;
     }
 
-    public User(Integer id, String name, String username, String pass){
-        this();
-        this.name = name;
-        this.id=id;
-        this.username = username;
-        this.password = pass;
-    }
 
     public int getId() {
         return id;
@@ -117,5 +117,14 @@ public class User {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                "; name='" + name + '\'' +
+                "; username='" + username + '\'' +
+                '}';
     }
 }

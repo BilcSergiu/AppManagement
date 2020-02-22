@@ -6,11 +6,7 @@ import com.example.applicationsmanagement.model.User;
 
 import java.util.Set;
 
-public abstract class AppDaoInterface implements AbstractDAO<Application> {
-
-    public AppDaoInterface() {
-
-    }
+public interface AppDaoInterface extends AbstractDAO<Application> {
 
     public abstract Application addUserToApp(Application app, User user);
 

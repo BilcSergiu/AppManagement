@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HbAppDao extends AppDaoInterface {
+public class HbAppDao implements AppDaoInterface {
 
     private static SessionFactory factory;
 

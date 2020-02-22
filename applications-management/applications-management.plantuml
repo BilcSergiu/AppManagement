@@ -1,0 +1,345 @@
+@startuml
+
+title __APPLICATIONS-MANAGEMENT's Class Diagram__\n
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        interface AbstractDAO {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.controller {
+        class AppController {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.ApplicationDao {
+          class AppDao {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.ApplicationDao {
+          interface AppDaoInterface {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.Service {
+        class AppService {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.viewmodel {
+        class AppViewModel {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.model {
+        class Application {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.aop {
+        class ApplicationAspect {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.model {
+        abstract class Application_ {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      class ApplicationsManagerApplication {
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.DbAccess {
+          class ConnectionFactory {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        class DaoFactory {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.controller {
+        class FileController {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.file {
+        class FileStorageException {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.file {
+        class FileStorageProperties {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.file {
+        class FileStorageService {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.ApplicationDao {
+          class HbAppDao {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.UserDao {
+          class HbUserDao {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.DbAccess {
+          class HibernateUtil {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    class MavenWrapperDownloader {
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      class ModelViewMapper {
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.file {
+        class MyFileNotFoundException {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.validator {
+        class NameValidator {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.file {
+        class UploadFileResponse {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.model {
+        class User {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.controller {
+        class UserController {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.UserDao {
+          class UserDao {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.db {
+        package com.example.applicationsmanagement.db.UserDao {
+          interface UserDaoInterface {
+          }
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.Service {
+        class UserService {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.viewmodel {
+        class UserViewModel {
+        }
+      }
+    }
+  }
+  
+
+  package  {
+    package com.example.applicationsmanagement {
+      package com.example.applicationsmanagement.model {
+        abstract class User_ {
+        }
+      }
+    }
+  }
+  
+
+  AppController o-- AppService : service
+  AppDao -up-|> AppDaoInterface
+  AppService o-- AppDaoInterface : appDao
+  AppService o-- ModelViewMapper : mapper
+  AppService o-- UserDaoInterface : userDao
+  FileController o-- FileStorageService : fileStorageService
+  HbAppDao -up-|> AppDaoInterface
+  HbUserDao -up-|> UserDaoInterface
+  UserController o-- UserService : service
+  UserDao -up-|> UserDaoInterface
+  UserService o-- ModelViewMapper : mapper
+  UserService o-- UserDaoInterface : userDao
+  UserService o-- AppDaoInterface : appDao
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
